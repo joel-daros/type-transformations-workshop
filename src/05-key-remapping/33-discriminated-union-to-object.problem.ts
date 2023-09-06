@@ -12,7 +12,9 @@ type Route =
   | { route: "/admin"; search: {} }
   | { route: "/admin/users"; search: {} };
 
-type RoutesObject = unknown;
+type RoutesObject = {
+  [K in Route["route"]]: Extract<Route, { route: K }>["search"];
+};
 
 type tests = [
   Expect<
@@ -28,5 +30,5 @@ type tests = [
         "/admin/users": {};
       }
     >
-  >,
+  >
 ];

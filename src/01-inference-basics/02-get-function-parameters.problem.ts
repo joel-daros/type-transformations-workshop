@@ -8,10 +8,12 @@ const makeQuery = (
       [key: string]: string;
     };
     body?: string;
-  },
+  }
 ) => {};
 
-type MakeQueryParameters = unknown;
+type MakeQueryParameters = Parameters<typeof makeQuery>;
+// this will return only the types present in the opts
+type MakeQueryParametersSecondArgument = MakeQueryParameters[1];
 
 type tests = [
   Expect<
@@ -25,8 +27,8 @@ type tests = [
             [key: string]: string;
           };
           body?: string;
-        },
+        }
       ]
     >
-  >,
+  >
 ];

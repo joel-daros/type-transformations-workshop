@@ -4,11 +4,19 @@ interface Example {
   name: string;
   age: number;
   id: string;
-  organisationId: string;
+  organizationId: string;
   groupId: string;
 }
 
-type OnlyIdKeys<T> = unknown;
+// type OnlyIdKeys<T> = {
+//   [K in Extract<keyof T, `${string}Id` | `${string}id`>]: T[K];
+// };
+
+type OnlyIdKeys<T> = {
+  [K in keyof T as K extends `${string}Id` | `${string}id` ? K : never]: T[K];
+};
+
+type x = OnlyIdKeys<Example>;
 
 type tests = [
   Expect<
@@ -16,7 +24,7 @@ type tests = [
       OnlyIdKeys<Example>,
       {
         id: string;
-        organisationId: string;
+        organizationId: string;
         groupId: string;
       }
     >
